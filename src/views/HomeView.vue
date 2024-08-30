@@ -50,6 +50,7 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 import { useSpeechSynthesis } from "@vueuse/core";
+import axios from "axios"
 
 const voice = ref<SpeechSynthesisVoice>(undefined as unknown as SpeechSynthesisVoice)
 const delay = (ms: number | undefined) => new Promise(res => setTimeout(res, ms))
@@ -70,8 +71,9 @@ export default {
             "Computer",
             "Television"
         ])
+        const test2: any[] = []
         const testNum = ref(0)
-        const maxTestNum = test1.value.length
+        const maxTestNum = ref(0)
         var stopped = false
 
         const speech = useSpeechSynthesis(text, {
@@ -83,8 +85,13 @@ export default {
         let synth: SpeechSynthesis
         const voices = ref<SpeechSynthesisVoice[]>([])
 
-        onMounted(() => {
+        onMounted(async () => {
 
+            const res = await axios.get('http://localhost:3000/data')
+            for (var x of res.data) {
+                test2.push(x.spelling)
+            }
+            maxTestNum.value = test2.length
             if (speech.isSupported.value) {
             // load at last
                 setTimeout(() => {
@@ -103,7 +110,7 @@ export default {
             }
             else {
                 testNum.value = 0
-                var shuffle = test1.value.sort(() => Math.random() - 0.5)
+                var shuffle = test2.sort(() => Math.random() - 0.5)
                 for (var t of shuffle) {
                     testNum.value++
                     text.value = t
