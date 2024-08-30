@@ -9,17 +9,19 @@
         >more details</a>
       </div>
       <div v-else>
-        <!-- <label class="font-bold mr-2">Spoken Text</label>
-        <input v-model="text" class="!inline-block" type="text"> -->
   
-        <p>Spelling Tests # {{ testNum }} of {{ maxTestNum }}</p>
-        <p>Set time interval per word (in seconds)</p>
+        <div>Spelling Tests # {{ testNum }} of {{ maxTestNum }}</div>
         <div class="form-group row justify-content-center">
+            <span class="timer">{{ timer }}</span>
+        </div>
+        <div class="input-group row justify-content-center">
+            <div class="">
+                Set time interval per word (in seconds)
+            </div>
             <div class="justify-content-center w-25">
-                <input v-model="wordInterval" class="form-control" type="text">
+                <input v-model="wordInterval" class="form-control form-control-sm" type="text">
             </div>
         </div>
-        <br>
         <label class="font-bold mr-2">Language</label>
         <div class="form row justify-content-center">
           <select v-model="voice" class="form-control form-control-sm w-25">
@@ -62,7 +64,7 @@ export default {
         const text = ref('Hello, everyone! Good morning!')
         const pitch = ref(1)
         const rate = ref(1)
-        const wordInterval = ref(5)
+        const wordInterval = ref(10)
         const test1 = ref([
             "Spelling",
             "Rainbow",
@@ -74,7 +76,9 @@ export default {
         const test2: any[] = []
         const testNum = ref(0)
         const maxTestNum = ref(0)
+        const timer =ref (0)
         var stopped = false
+        var myTimer;
 
         const speech = useSpeechSynthesis(text, {
             voice,
@@ -87,7 +91,7 @@ export default {
 
         onMounted(async () => {
 
-            const res = await axios.get('http://localhost:3000/data')
+            const res = await axios.get('http://192.168.2.197:3000/data')
             for (var x of res.data) {
                 test2.push(x.spelling)
             }
@@ -95,35 +99,36 @@ export default {
             if (speech.isSupported.value) {
             // load at last
                 setTimeout(() => {
-                synth = window.speechSynthesis
-                voices.value = synth.getVoices()
-                voice.value = voices.value[0]
+                    synth = window.speechSynthesis
+                    voices.value = synth.getVoices()
+                    voice.value = voices.value[0]
                 })
             }
         })
 
         const play = async () => {
             stopped = false
-            if (speech.status.value === 'pause') {
-                console.log('resume')
-                window.speechSynthesis.resume()
-            }
-            else {
-                testNum.value = 0
-                var shuffle = test2.sort(() => Math.random() - 0.5)
-                for (var t of shuffle) {
-                    testNum.value++
-                    text.value = t
-                    speech.speak()
-                    setTimeout(() => {
-                        speech.speak()
-                    }, 2000)
+            testNum.value = 0
+            var shuffle = test2.sort(() => Math.random() - 0.5)
+            for (var t of shuffle) {
+                testNum.value++
+                text.value = t
+                speech.speak()
+                await delay(2000)
+                speech.speak()
+                timer.value = 0
 
-                    await delay(wordInterval.value * 1000)
-                    if (stopped) {
-                        break;
-                    }
+                myTimer = setInterval(() => {
+                    timer.value++
+                }, 1000)
+
+                await delay(wordInterval.value * 1000)
+                if (stopped) {
+                    timer.value = 0
+                    clearInterval(myTimer)
+                    break;
                 }
+                clearInterval(myTimer)
             }
         }
 
@@ -148,10 +153,17 @@ export default {
             voice,
             testNum,
             maxTestNum,
-            wordInterval
+            wordInterval,
+            timer
         }
     }
 }
 
 
 </script>
+
+<style>
+.timer {
+    font-size: 100px;
+}
+</style>
