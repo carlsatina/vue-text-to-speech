@@ -8,57 +8,79 @@
           target="_blank"
         >more details</a>
       </div>
-      <div v-else>
+      <div class="container"  v-else>
   
-        <div>Spelling Tests # {{ testNum }} of {{ maxTestNum }}</div>
-        <div class="form-group row justify-content-center">
-            <span class="timer">{{ timer }}</span>
-        </div>
-        <div class="input-group row justify-content-center">
-            <div class="">
-                Set time interval per word (in seconds)
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                Spelling Tests # {{ testNum }} of {{ maxTestNum }}
             </div>
-            <div class="justify-content-center w-25">
-                <input v-model="wordInterval" class="form-control form-control-sm" type="text">
-            </div>
+            <div class="col-md-3"></div>
         </div>
-        <label class="font-bold mr-2">Language</label>
-        <div class="form row justify-content-center">
-          <select v-model="voice" class="form-control form-control-sm w-25">
-            <option
-              v-for="(voice, i) in voices"
-              :key="i"
-              :value="voice"
-            >
-              {{ `${voice.name} (${voice.lang})` }}
-            </option>
-          </select>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <span class="timer">{{ timer }}</span>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 d-flex flex-row align-items-center justify-content-center">
+                <span>Set time interval per word (in seconds) : </span>
+                <input v-model="wordInterval" class="form-control form-control-sm border border-0 border-bottom" type="text" style="width: 50px;">
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <label class="font-bold mr-2">Select Voice and Language</label>
+                <div class="form row justify-content-center">
+                <select v-model="voice" class="form-control form-control-sm w-25">
+                    <option
+                    v-for="(voice, i) in voices"
+                    :key="i"
+                    :value="voice"
+                    >
+                    {{ `${voice.name} (${voice.lang})` }}
+                    </option>
+                </select>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
         </div>
   
-        <br>
-        <div class="mt-2">
-          <button class="btn btn-primary"
-            :disabled="speech.isPlaying.value"
-            @click="play"
-          >
-            Begin Test
-          </button>&nbsp;&nbsp;&nbsp;
-          <button class="btn btn-danger" @click="stop">Stop</button>
+        <div class="row mt-4">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 d-flex flex-row align-items-center justify-content-center">
+                <button class="btn btn-primary"
+                    :disabled="speech.isPlaying.value"
+                    @click="play"
+                >
+                    Begin Test
+                </button>&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-danger" @click="stop">Stop</button>
+            </div>
+            <div class="col-md-3"></div>
         </div>
-        <br>
-        <div class="justify-content-center" v-if="done">
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(word,key) in test2">
-                        <td>{{ word }}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row mt-4" v-if="done">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <table class="table table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Verify Your Answers Below</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(word,key) in test2">
+                            <td>{{ word }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3"></div>
         </div>
       </div>
     </div>
@@ -109,7 +131,7 @@ export default {
                 setTimeout(() => {
                     synth = window.speechSynthesis
                     voices.value = synth.getVoices()
-                    voice.value = voices.value[0]
+                    voice.value = voices.value[158]
                 })
             }
         })
