@@ -17,7 +17,7 @@ export default {
     setup() {
         const word = ref('')
         const addWord = async () => {
-            const res = await axios.post('https://json-server-vercel-inky-eta.vercel.app/data', {
+            const res = await axios.post(process.env.VUE_APP_JSON_SERVER + '/data', {
                 spelling: word.value
             })
             word.value = ''

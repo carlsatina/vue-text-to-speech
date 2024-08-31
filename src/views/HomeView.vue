@@ -99,7 +99,7 @@ export default {
 
         onMounted(async () => {
 
-            const res = await axios.get('https://json-server-vercel-inky-eta.vercel.app/data')
+            const res = await axios.get(process.env.VUE_APP_JSON_SERVER + '/data')
             for (var x of res.data) {
                 test2.push(x.spelling)
             }
