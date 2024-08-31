@@ -80,14 +80,6 @@ export default {
         const pitch = ref(1)
         const rate = ref(1)
         const wordInterval = ref(5)
-        const test1 = ref([
-            "Spelling",
-            "Rainbow",
-            "Cellphone",
-            "Electric Fan",
-            "Computer",
-            "Television"
-        ])
         const test2: any[] = []
         const testNum = ref(0)
         const maxTestNum = ref(0)
@@ -107,7 +99,7 @@ export default {
 
         onMounted(async () => {
 
-            const res = await axios.get('http://192.168.2.197:3000/data')
+            const res = await axios.get('https://json-server-vercel-inky-eta.vercel.app/data')
             for (var x of res.data) {
                 test2.push(x.spelling)
             }
