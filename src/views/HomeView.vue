@@ -45,6 +45,21 @@
           </button>&nbsp;&nbsp;&nbsp;
           <button class="btn btn-danger" @click="stop">Stop</button>
         </div>
+        <br>
+        <div class="justify-content-center" v-if="done">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(word,key) in test2">
+                        <td>{{ word }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
       </div>
     </div>
   </template>
@@ -64,7 +79,7 @@ export default {
         const text = ref('Hello, everyone! Good morning!')
         const pitch = ref(1)
         const rate = ref(1)
-        const wordInterval = ref(10)
+        const wordInterval = ref(5)
         const test1 = ref([
             "Spelling",
             "Rainbow",
@@ -79,6 +94,7 @@ export default {
         const timer =ref (0)
         var stopped = false
         var myTimer;
+        const done = ref(false);
 
         const speech = useSpeechSynthesis(text, {
             voice,
@@ -109,6 +125,7 @@ export default {
         const play = async () => {
             stopped = false
             testNum.value = 0
+            done.value = false
             var shuffle = test2.sort(() => Math.random() - 0.5)
             for (var t of shuffle) {
                 testNum.value++
@@ -130,6 +147,8 @@ export default {
                 }
                 clearInterval(myTimer)
             }
+            done.value = true
+            console.log("done is true")
         }
 
         function pause() {
@@ -154,7 +173,9 @@ export default {
             testNum,
             maxTestNum,
             wordInterval,
-            timer
+            timer,
+            test2,
+            done
         }
     }
 }
