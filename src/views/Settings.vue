@@ -5,8 +5,8 @@
             <div class="col-md-6">
                 Type the words to be added in the text box below and click Submit button
                 <div class="input-group mb-3">
-                    <input type="text" v-model="word" class="form-control" @keypress.enter="addWord" placeholder="Add a Word" aria-label="Add a Word" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="addWord" >Submit</button>
+                    <input type="text" v-model="word" class="form-control" @keypress.enter="addItem" placeholder="Add a Word" aria-label="Add a Word" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="addItem" >Submit</button>
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -32,7 +32,7 @@ export default {
     name: "Settings",
     setup() {
         const word = ref('')
-        const addWord = async () => {
+        const addItem = async () => {
             await addWord(word)
             word.value = ''
             maxTestNum.value++
@@ -49,7 +49,7 @@ export default {
             maxTestNum.value = allWords.length
         })
         return {
-            addWord,
+            addItem,
             word,
             maxTestNum
         }
