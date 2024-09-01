@@ -102,7 +102,7 @@ export default {
         const pitch = ref(1)
         const rate = ref(1)
         const wordInterval = ref(5)
-        const test2: any[] = []
+        const test2:any[] = []
         const testNum = ref(0)
         const maxTestNum = ref(0)
         const timer =ref (0)

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import SettingsView from "../views/Settings.vue";
+import AllWords from "@/views/AllWords.vue"
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,6 +13,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/settings",
     name: "settings",
     component: SettingsView,
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: AllWords,
   },
 ];
 

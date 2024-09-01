@@ -22,27 +22,27 @@
 </template>
 
 
-<script lang="ts">
+<script>
 import { onMounted, ref } from "vue";
 import axios from "axios"
+import addWord from '@/composables/addWord'
+import getAllWords from '@/composables/getAllWords'
 
 export default {
     name: "Settings",
     setup() {
         const word = ref('')
         const addWord = async () => {
-            const res = await axios.post(process.env.VUE_APP_JSON_SERVER + '/data', {
-                spelling: word.value
-            })
+            await addWord(word)
             word.value = ''
             maxTestNum.value++
         }
         const maxTestNum = ref(0)
-        const allWords: any[] = []
+        const allWords = []
 
         onMounted(async () => {
 
-            const res = await axios.get(process.env.VUE_APP_JSON_SERVER + '/data')
+            const res = await getAllWords()
             for (var x of res.data) {
                 allWords.push(x.spelling)
             }
