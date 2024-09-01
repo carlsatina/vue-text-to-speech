@@ -131,7 +131,7 @@ export default {
                 setTimeout(() => {
                     synth = window.speechSynthesis
                     voices.value = synth.getVoices()
-                    voice.value = voices.value[158]
+                    voice.value = voices.value[0]
                 })
             }
         })
