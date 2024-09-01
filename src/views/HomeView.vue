@@ -162,7 +162,6 @@ export default {
                 clearInterval(myTimer)
             }
             done.value = true
-            console.log("done is true")
         }
 
         function pause() {
