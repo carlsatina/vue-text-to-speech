@@ -14,7 +14,7 @@
                         <tr v-for="entry in allWords">
                             <td>{{ entry.spelling }}</td>
                             <td>
-                                <button type="button" class="btn btn-info btn-sm">Edit</button>&nbsp;
+                                <!-- <button type="button" class="btn btn-info btn-sm">Edit</button>&nbsp; -->
                                 <button type=button class="btn btn-danger btn-sm" @click="removeItem(entry.id)">Delete</button>
 
                             </td>
